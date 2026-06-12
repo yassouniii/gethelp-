@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>You Matter — نفسك أمانة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --deep:    #0f1a14;
+      --forest:  #1a3025;
+      --emerald: #2d6a4f;
+      --sage:    #74b49b;
+      --gold:    #c9a84c;
+      --cream:   #f5f0e8;
+      --warm:    #fdf8f0;
+      --text:    #1a1a1a;
+      --muted:   #5a6b62;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--warm);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── GEOMETRIC PATTERN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(60deg, transparent, transparent 40px, rgba(45,106,79,0.03) 40px, rgba(45,106,79,0.03) 41px),
+        repeating-linear-gradient(-60deg, transparent, transparent 40px, rgba(45,106,79,0.03) 40px, rgba(45,106,79,0.03) 41px),
+        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(201,168,76,0.02) 40px, rgba(201,168,76,0.02) 41px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2.5rem;
+      background: rgba(15,26,20,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Amiri', serif;
+      color: var(--gold);
+      font-size: 1.4rem;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(245,240,232,0.75);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(160deg, var(--deep) 0%, var(--forest) 60%, #1f4035 100%);
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    /* Islamic star pattern in hero */
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .bismillah {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.5rem, 4vw, 2.8rem);
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.2s forwards;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.5s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.7s forwards;
+    }
+
+    .hero-title span { color: var(--gold); }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: rgba(245,240,232,0.65);
+      max-width: 540px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 0.9s forwards;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.1s forwards;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--deep);
+      padding: 0.9rem 2.2rem;
+      border-radius: 2px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover { background: #e0bc60; transform: translateY(-2px); }
+
+    .btn-outline {
+      border: 1px solid rgba(245,240,232,0.3);
+      color: var(--cream);
+      padding: 0.9rem 2.2rem;
+      border-radius: 2px;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--gold); transform: translateY(-2px); }
+
+    /* ── SECTION SHARED ── */
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 6rem 2rem;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--emerald);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--deep);
+      line-height: 1.2;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-title span { color: var(--emerald); }
+
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: var(--gold);
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── QURAN BANNER ── */
+    .quran-banner {
+      background: linear-gradient(135deg, var(--forest), var(--deep));
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quran-banner::before {
+      content: '✦';
+      position: absolute;
+      font-size: 20rem;
+      color: rgba(201,168,76,0.04);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .quran-arabic {
+      font-family: 'Amiri', serif;
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .quran-translation {
+      font-size: 1.05rem;
+      color: rgba(245,240,232,0.75);
+      font-style: italic;
+      max-width: 600px;
+      margin: 0 auto 0.8rem;
+      line-height: 1.8;
+    }
+
+    .quran-ref {
+      font-size: 0.78rem;
+      color: var(--sage);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── SIGNS GRID ── */
+    .signs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .sign-card {
+      background: white;
+      border: 1px solid rgba(45,106,79,0.1);
+      border-left: 3px solid var(--emerald);
+      padding: 1.8rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .sign-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(45,106,79,0.1);
+    }
+
+    .sign-icon {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    .sign-card h3 {
+      font-family: 'Amiri', serif;
+      font-size: 1.2rem;
+      color: var(--deep);
+      margin-bottom: 0.6rem;
+    }
+
+    .sign-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── HELP STEPS ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .step {
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      background: var(--emerald);
+      color: white;
+      font-family: 'Amiri', serif;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 2px;
+    }
+
+    .step-content h3 {
+      font-family: 'Amiri', serif;
+      font-size: 1.25rem;
+      color: var(--deep);
+      margin-bottom: 0.4rem;
+    }
+
+    .step-content p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── ISLAMIC REMINDERS ── */
+    .reminders {
+      background: var(--cream);
+      border-top: 1px solid rgba(45,106,79,0.1);
+      border-bottom: 1px solid rgba(45,106,79,0.1);
+    }
+
+    .reminders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .reminder-card {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: white;
+      border-radius: 2px;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .reminder-arabic {
+      font-family: 'Amiri', serif;
+      font-size: 1.6rem;
+      color: var(--emerald);
+      margin-bottom: 0.8rem;
+    }
+
+    .reminder-card p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── CRISIS BOX ── */
+    .crisis-box {
+      background: linear-gradient(135deg, #7f1d1d, #991b1b);
+      color: white;
+      padding: 3rem;
+      border-radius: 2px;
+      text-align: center;
+      margin: 3rem 0;
+    }
+
+    .crisis-box h2 {
+      font-family: 'Amiri', serif;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .crisis-box p {
+      opacity: 0.85;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .crisis-numbers {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .crisis-number {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 0.8rem 1.5rem;
+      border-radius: 2px;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    /* ── DEEP MESSAGE ── */
+    .message-section {
+      background: linear-gradient(160deg, var(--deep), var(--forest));
+      color: var(--cream);
+      text-align: center;
+      padding: 8rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .message-section::before {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .message-section::after {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border: 1px solid rgba(201,168,76,0.05);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .message-inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+
+    .ornament {
+      font-family: 'Amiri', serif;
+      font-size: 3rem;
+      color: var(--gold);
+      opacity: 0.6;
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    .message-title {
+      font-family: 'Amiri', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--gold);
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+
+    .message-body {
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      line-height: 2;
+      color: rgba(245,240,232,0.85);
+      margin-bottom: 1.5rem;
+    }
+
+    .message-hadith {
+      font-family: 'Amiri', serif;
+      font-size: 1.3rem;
+      color: var(--sage);
+      font-style: italic;
+      margin-top: 2.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(201,168,76,0.2);
+    }
+
+    /* ── CONTACT ── */
+    .contact-section {
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .contact-card {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      background: white;
+      border: 1px solid rgba(45,106,79,0.15);
+      padding: 3rem 4rem;
+      border-radius: 2px;
+      margin-top: 2.5rem;
+    }
+
+    .contact-name {
+      font-family: 'Amiri', serif;
+      font-size: 1.8rem;
+      color: var(--deep);
+    }
+
+    .contact-role {
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .whatsapp-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: #25d366;
+      color: white;
+      padding: 0.9rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .whatsapp-btn:hover { background: #20bd5a; transform: translateY(-2px); }
+
+    .whatsapp-icon {
+      width: 22px; height: 22px;
+      fill: white;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--deep);
+      color: rgba(245,240,232,0.45);
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+
+    footer span { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      animation: fadeUp 1s ease 1.8s forwards;
+    }
+
+    .scroll-hint span {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(245,240,232,0.4);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 1.8s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 640px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { gap: 1rem; }
+      .contact-card { padding: 2rem 1.5rem; }
+      .crisis-box { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">نفسك أمانة</div>
+    <ul class="nav-links">
+      <li><a href="#signs">Signs</a></li>
+      <li><a href="#help">How to Help</a></li>
+      <li><a href="#faith">Faith</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    <p class="hero-eyebrow">You are not alone — أنت لست وحدك</p>
+    <h1 class="hero-title">Your life is a<br/><span>gift from Allah</span></h1>
+    <p class="hero-sub">Every soul matters. Every struggle is seen. If darkness has found you, this page was made for you — with love, with faith, and with hope.</p>
+    <div class="hero-cta">
+      <a href="#help" class="btn-primary">I need help</a>
+      <a href="#signs" class="btn-outline">Help someone else</a>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- QURAN VERSE -->
+  <div class="quran-banner">
+    <div class="quran-arabic reveal">وَلَا تَقْتُلُوا أَنفُسَكُمْ ۚ إِنَّ اللَّهَ كَانَ بِكُمْ رَحِيمًا</div>
+    <p class="quran-translation reveal">"And do not kill yourselves. Surely, Allah is Most Merciful to you."</p>
+    <p class="quran-ref reveal">— Surah An-Nisa, 4:29</p>
+  </div>
+
+  <!-- SIGNS SECTION -->
+  <section id="signs">
+    <div class="container">
+      <p class="section-label reveal">Recognize — تعرّف</p>
+      <h2 class="section-title reveal">Warning <span>signs</span> to watch for</h2>
+      <div class="divider reveal"></div>
+      <p class="reveal" style="color:var(--muted); line-height:1.8; max-width:600px; margin-bottom:0.5rem;">
+        Someone you love may be struggling in silence. These signs can help you see what words often cannot say.
+      </p>
+      <div class="signs-grid">
+        <div class="sign-card reveal">
+          <div class="sign-icon">🌑</div>
+          <h3>Withdrawal from others</h3>
+          <p>Pulling away from family, friends, prayer circles — avoiding the people and places they once loved.</p>
+        </div>
+        <div class="sign-card reveal">
+          <div class="sign-icon">💬</div>
+          <h3>Talking about death</h3>
+          <p>Saying things like "I wish I wasn't here," "everyone would be better off without me," or giving away prized possessions.</p>
+        </div>
+        <div class="sign-card reveal">
+          <div class="sign-icon">🪞</div>
+          <h3>Hopelessness</h3>
+          <p>A deep belief that nothing will ever get better — that they are beyond help, beyond mercy, beyond hope.</p>
+        </div>
+        <div class="sign-card reveal">
+          <div class="sign-icon">⚡</div>
+          <h3>Sudden calmness</h3>
+          <p>After a period of depression, a sudden sense of peace can sometimes mean a decision has been made. Take it seriously.</p>
+        </div>
+        <div class="sign-card reveal">
+          <div class="sign-icon">🕌</div>
+          <h3>Loss of faith connection</h3>
+          <p>Stopping prayers, abandoning the Quran, feeling that Allah has abandoned them. Pain can disconnect people from their anchor.</p>
+        </div>
+        <div class="sign-card reveal">
+          <div class="sign-icon">😶</div>
+          <h3>Emotional numbness</h3>
+          <p>Feeling nothing at all — no joy, no sadness, no connection. A blankness that is its own kind of suffering.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO HELP -->
+  <section id="help" style="background: var(--cream);">
+    <div class="container">
+      <p class="section-label reveal">Act — تحرّك</p>
+      <h2 class="section-title reveal">How to <span>help</span> someone</h2>
+      <div class="divider reveal"></div>
+
+      <!-- CRISIS BOX -->
+      <div class="crisis-box reveal">
+        <h2>🚨 In immediate danger? Act now.</h2>
+        <p>If someone is in immediate danger, do not leave them alone. Call for emergency help immediately and stay with them until help arrives.</p>
+        <div class="crisis-numbers">
+          <div class="crisis-number">🇲🇦 Morocco: 141</div>
+          <div class="crisis-number">Emergency: 15</div>
+          <div class="crisis-number">Police: 19</div>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-num">١</div>
+          <div class="step-content">
+            <h3>Listen without judgment</h3>
+            <p>Don't rush to fix or advise. Sit with them. Say: "I'm here. I hear you. You don't have to face this alone." Presence is often more powerful than words.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">٢</div>
+          <div class="step-content">
+            <h3>Ask directly</h3>
+            <p>Asking "Are you thinking about suicide?" does not plant the idea — it opens a door. Asking shows you care enough to go there with them.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">٣</div>
+          <div class="step-content">
+            <h3>Remove means of harm</h3>
+            <p>Quietly and without drama, put distance between them and anything that could cause harm. This small act can save a life.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">٤</div>
+          <div class="step-content">
+            <h3>Connect them to professional help</h3>
+            <p>A mental health professional is not a sign of weakness — it is wisdom. Help them take that first step. Offer to go with them.</p>
+          </div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">٥</div>
+          <div class="step-content">
+            <h3>Stay. Follow up. Keep showing up.</h3>
+            <p>Recovery is not a single moment. Keep checking in. A message, a call, a visit. Let them know they have not been forgotten.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ISLAMIC REMINDERS -->
+  <section id="faith" class="reminders">
+    <div class="container">
+      <p class="section-label reveal">Faith — إيمان</p>
+      <h2 class="section-title reveal">What Islam <span>teaches</span> us</h2>
+      <div class="divider reveal"></div>
+      <div class="reminders-grid">
+        <div class="reminder-card reveal">
+          <div class="reminder-arabic">إِنَّ مَعَ الْعُسْرِ يُسْرًا</div>
+          <p><strong>"With hardship comes ease."</strong><br/>Surah Ash-Sharh, 94:6 — Allah repeats this twice in the same surah. The ease is already promised.</p>
+        </div>
+        <div class="reminder-card reveal">
+          <div class="reminder-arabic">لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ</div>
+          <p><strong>"Do not despair of the mercy of Allah."</strong><br/>Surah Az-Zumar, 39:53 — No darkness is deeper than Allah's light. No sin is greater than His forgiveness.</p>
+        </div>
+        <div class="reminder-card reveal">
+          <div class="reminder-arabic">وَهُوَ مَعَكُمْ أَيْنَ مَا كُنتُمْ</div>
+          <p><strong>"He is with you wherever you are."</strong><br/>Surah Al-Hadid, 57:4 — Even in your loneliest, darkest 3am — you are not unseen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEEP MESSAGE -->
+  <section class="message-section">
+    <div class="message-inner">
+      <span class="ornament">✦ ✦ ✦</span>
+      <h2 class="message-title reveal">Your life is not yours to take</h2>
+      <p class="message-body reveal">
+        Allah created you with purpose. Not by accident, not as an afterthought —
+        but deliberately, with a specific role that only you can fill in this world.
+        Your pain is real. Your exhaustion is real. But so is the mercy of the One
+        who sees every tear that falls in the dark.
+      </p>
+      <p class="message-body reveal">
+        The Prophet ﷺ said: <em>"No fatigue, nor disease, nor sorrow, nor sadness, nor hurt, nor distress befalls a Muslim — even if it were the prick he receives from a thorn — but that Allah expiates some of his sins."</em> Your suffering is not wasted. It is seen, counted, and honoured.
+      </p>
+      <p class="message-body reveal">
+        Stay. The morning you are afraid will never come — it will come.
+        The ease that feels impossible — it is already written.
+        The people who need your presence — they exist, even if you haven't met them yet.
+        <strong>You matter. Your soul matters. Your story is not finished.</strong>
+      </p>
+      <div class="message-hadith reveal">
+        "Be in this world as though you are a stranger or a wayfarer."<br/>
+        <span style="font-size:0.85rem; color: var(--sage);">— Hadith, Ibn Umar (r.a.), Sahih al-Bukhari</span>
+      </div>
+      <span class="ornament" style="margin-top:2rem; margin-bottom:0;">✦ ✦ ✦</span>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="contact-section">
+    <div class="container">
+      <p class="section-label reveal">Reach out — تواصل معي</p>
+      <h2 class="section-title reveal">You don't have to <span>talk to no one</span></h2>
+      <div class="divider reveal"></div>
+      <p class="reveal" style="color:var(--muted); line-height:1.8;">If you need someone to talk to, reach out. No judgment. No rush. Just a human ear.</p>
+      <div class="reveal">
+        <div class="contact-card">
+          <div class="contact-name">Yassine</div>
+          <div class="contact-role">Here to listen — متواجد للاستماع</div>
+          <a href="https://wa.me/2126XXXXXXXX" class="whatsapp-btn" target="_blank">
+            <svg class="whatsapp-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            WhatsApp: 06 XX XX XX XX
+          </a>
+          <p style="font-size:0.8rem; color:var(--muted); text-align:center; max-width:280px;">Available to listen. Remember: for immediate danger, always call emergency services first.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Made with <span>♥</span> and faith — بُني بالمحبة والإيمان</p>
+    <p style="margin-top:0.5rem;">نفسك أمانة — Your soul is a trust</p>
+  </footer>
+
+  <script>
+    // Intersection Observer for scroll reveals
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // Staggered card reveals
+    const cards = document.querySelectorAll('.sign-card, .reminder-card, .step');
+    const cardObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const siblings = Array.from(entry.target.parentElement.children);
+          const index = siblings.indexOf(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, index * 100);
+          cardObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    cards.forEach(el => cardObserver.observe(el));
+
+    // Smooth nav background transition
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 60) {
+        nav.style.background = 'rgba(15,26,20,0.98)';
+      } else {
+        nav.style.background = 'rgba(15,26,20,0.92)';
+      }
+    });
+  </script>
+
+</body>
+</html>
